@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  .form-container
+    if error
+      .alert.alert-error
+        p= error
+    
+    form(action='/generate', method='post')
+      .form-group
+        label(for='elevatorPitch') What's your startup's elevator pitch?
+        textarea(
+          id='elevatorPitch'
+          name='elevatorPitch'
+          placeholder='Describe your startup idea in a few sentences. What problem does it solve? Who is your target audience? What makes it unique?'
+          rows='6'
+          required
+        )
+        .form-help
+          p Example: "We're building a platform that connects freelance designers with small businesses who need affordable, high-quality logo design. Our AI matching system pairs clients with the perfect designer based on style preferences and budget."
+      
+      .form-group
+        button(type='submit', class='btn btn-primary') Generate Startup Names
+        
+  .features
+    .feature-grid
+      .feature-item
+        h3 🎯 AI-Powered
+        p Uses OpenAI GPT-4o to generate creative and relevant startup names
+      .feature-item
+        h3 💡 Smart Analysis
+        p Analyzes your elevator pitch to understand your startup's core concept
+      .feature-item
+        h3 🎨 Creative Names
+        p Generates 5 unique, memorable names with detailed explanations 

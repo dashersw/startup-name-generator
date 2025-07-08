@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .results-container
+    .elevator-pitch-display
+      h2 Your Elevator Pitch:
+      p.pitch-text= elevatorPitch
+    
+    .suggestions-section
+      h2 Here are your startup name suggestions:
+      
+      if suggestions && suggestions.length > 0
+        .suggestions-grid
+          each suggestion, index in suggestions
+            .suggestion-card
+              .suggestion-number= index + 1
+              .suggestion-content
+                h3.suggestion-name= suggestion.name
+                p.suggestion-explanation= suggestion.explanation
+      else
+        .no-suggestions
+          p No suggestions were generated. Please try again with a different elevator pitch.
+    
+    .actions
+      a(href='/', class='btn btn-secondary') Generate More Names
+      button(onclick='copyResults()', class='btn btn-outline') Copy Results
+      
+  script.
+    function copyResults() {
+      const suggestions = document.querySelectorAll('.suggestion-card');
+      let text = 'Startup Name Suggestions:\n\n';
+      
+      suggestions.forEach((card, index) => {
+        const name = card.querySelector('.suggestion-name').textContent;
+        const explanation = card.querySelector('.suggestion-explanation').textContent;
+        text += `${index + 1}. ${name}\n   ${explanation}\n\n`;
+      });
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const button = document.querySelector('.btn-outline');
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+          button.textContent = originalText;
+        }, 2000);
+      });
+    } 
